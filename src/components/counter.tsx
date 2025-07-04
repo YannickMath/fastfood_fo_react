@@ -1,11 +1,10 @@
 // import React from "react";
-import type { RootState } from "../reducer/store";
-import { useSelector, useDispatch } from "react-redux";
 import { decrement, increment } from "../reducer/slices/counterSlice";
-
+import { useAppSelector, useAppDispatch } from "../reducer/hooks";
 export function Counter() {
-  const count = useSelector((state: RootState) => state.counter.value);
-  const dispatch = useDispatch();
+  // The `state` arg is correctly typed as `RootState` already
+  const count = useAppSelector((state) => state.counter.value);
+  const dispatch = useAppDispatch();
 
   return (
     <div>
