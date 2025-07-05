@@ -1,5 +1,4 @@
 import { RiAccountCircleLine } from "react-icons/ri";
-import { Counter } from "../components/counter";
 import ToggleDark from "../components/toggleDark";
 
 export default function Header() {
