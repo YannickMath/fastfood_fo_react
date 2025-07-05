@@ -11,7 +11,7 @@ export default function Home() {
   const { name, description, price } = products ? products[0] : {};
   console.log(isLoading);
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-600">
+    <div className="w-full h-full flex flex-col items-center justify-center min-h-screen bg-gray-600">
       <h1 className="text-4xl font-bold mb-4">Welcome to FastFood</h1>
       <p className="text-lg text-gray-700 mb-8">
         Your favorite food delivered fast!
