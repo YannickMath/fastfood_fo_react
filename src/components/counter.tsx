@@ -1,8 +1,6 @@
-// import React from "react";
 import { decrement, increment } from "../reducer/slices/counterSlice";
 import { useAppSelector, useAppDispatch } from "../reducer/hooks";
 export function Counter() {
-  // The `state` arg is correctly typed as `RootState` already
   const count = useAppSelector((state) => state.counter.value);
   const dispatch = useAppDispatch();
 

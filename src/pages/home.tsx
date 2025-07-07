@@ -8,8 +8,6 @@ export default function Home() {
     isLoading,
   } = useGetProductsByCategoryQuery("2");
 
-  const { name, description, price } = products ? products[0] : {};
-  console.log(isLoading);
   return (
     <div className="w-full h-full flex flex-col items-center justify-center min-h-screen bg-gray-600">
       <h1 className="text-4xl font-bold mb-4">Welcome to FastFood</h1>
@@ -31,8 +29,8 @@ export default function Home() {
         )}
         {products && (
           <ul className="list-disc">
-            {products.map((product) => (
-              <li key={product.id} className="mb-2">
+            {products.map(({ id, name, price, description }) => (
+              <li key={id} className="mb-2">
                 {name} - ${price} - {description}
               </li>
             ))}

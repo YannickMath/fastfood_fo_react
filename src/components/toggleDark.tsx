@@ -1,15 +1,8 @@
-// import { MdDarkMode } from "react-icons/md";
-
 export default function ToggleDark() {
   const toggleDarkMode = () => {
     const htmlElement = document.documentElement;
     htmlElement.classList.toggle("dark");
   };
-  console.log("ToggleDark component rendered");
-  console.log(
-    "Dark mode is",
-    document.documentElement.classList.contains("dark") ? "enabled" : "disabled"
-  );
   return (
     <label className="flex cursor-pointer gap-2">
       <svg

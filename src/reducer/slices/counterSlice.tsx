@@ -4,7 +4,6 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 export interface CounterState {
   value: number;
 }
-//define the initial state using the CounterState interface
 const initialState: CounterState = {
   value: 0,
 };
