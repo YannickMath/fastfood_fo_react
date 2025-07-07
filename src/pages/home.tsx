@@ -1,12 +1,12 @@
-import Loader from "../components/loader";
-import { useGetProductsByCategoryQuery } from "../services/productsByCategory";
+// import Loader from "../components/loader";
+// import { useGetProductsByCategoryQuery } from "../services/productsByCategory";
 
 export default function Home() {
-  const {
-    data: products,
-    error,
-    isLoading,
-  } = useGetProductsByCategoryQuery("2");
+  // const {
+  //   data: products,
+  //   error,
+  //   isLoading,
+  // } = useGetProductsByCategoryQuery("2");
 
   return (
     <div className="w-full h-full flex flex-col items-center justify-center min-h-screen bg-gray-600">
@@ -16,7 +16,7 @@ export default function Home() {
       </p>
       <button className="btn btn-primary">Order Now</button>
       <div className="mt-8">
-        {isLoading && <Loader />}
+        {/* {isLoading && <Loader />}
         {error && (
           <p>
             Error loading products:{" "}
@@ -35,7 +35,7 @@ export default function Home() {
               </li>
             ))}
           </ul>
-        )}
+        )} */}
       </div>
     </div>
   );

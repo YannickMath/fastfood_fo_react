@@ -9,7 +9,6 @@ import Login from "./pages/login.tsx";
 import { lazy } from "react";
 import { Suspense } from "react";
 
-const About = lazy(() => import("./pages/about.tsx"));
 const Layout = lazy(() => import("./layouts/layout.tsx"));
 const Home = lazy(() => import("./pages/home.tsx"));
 
@@ -17,12 +16,11 @@ createRoot(document.getElementById("root")!).render(
   <Provider store={store}>
     <StrictMode>
       <BrowserRouter>
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={""}>
           <Routes>
             <Route path="/" element={<Layout />}>
               <Route index element={<Home />} />
-              <Route path="about" element={<About />} />
-              <Route path="login" element={<Login handleLogout={() => {}} />} />
+              <Route path="login" element={<Login />} />
               <Route path="signup" element={<Signup />} />
             </Route>
           </Routes>

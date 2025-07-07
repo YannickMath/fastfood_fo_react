@@ -3,7 +3,8 @@ import ToggleDark from "../components/toggleDark";
 import Latnight from "../assets/Latnight.jpeg";
 import { useNavigate } from "react-router-dom";
 import HeaderNavbar from "../components/headerNavbar";
-import { useGetCategoriesQuery } from "../services/categories";
+import Tooltip from "../components/tooltip";
+// import { useGetCategoriesQuery } from "../services/categories";
 
 export default function Header() {
   const navigate = useNavigate();
@@ -12,11 +13,13 @@ export default function Header() {
     navigate("/login");
   };
 
-  const { data: categories, error, isLoading } = useGetCategoriesQuery();
-  console.log("categories", categories, error, isLoading);
-
-  if (isLoading) return <div>Chargement du layout...</div>;
-  if (error) return <div>Erreur lors du chargement</div>;
+  const categories = [
+    { id: 1, type: "Burgers" },
+    { id: 2, type: "Pizzas" },
+    { id: 3, type: "Fries" },
+    { id: 4, type: "Drinks" },
+    { id: 5, type: "Desserts" },
+  ];
 
   return (
     <>
@@ -25,10 +28,12 @@ export default function Header() {
           <img src={Latnight} alt="FastFood Logo" className="w-34 h-34" />
           <HeaderNavbar categories={categories} />
           <div className="flex items-center space-x-4">
-            <RiAccountCircleLine
-              className="w-8 h-8 cursor-pointer"
-              onClick={handleLogin}
-            />
+            <Tooltip text="Connexion">
+              <RiAccountCircleLine
+                className="w-8 h-8 cursor-pointer"
+                onClick={handleLogin}
+              />
+            </Tooltip>
             <ToggleDark />
           </div>
         </div>
