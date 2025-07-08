@@ -3,11 +3,13 @@ import counterReducer from "./slices/counterSlice";
 import { productsByCategoryApi } from "../services/productsByCategory";
 import { setupListeners } from "@reduxjs/toolkit/query";
 import { categoriesApi } from "../services/categories";
+import { productsApi } from "../services/products";
 
 export const store = configureStore({
   reducer: {
     counter: counterReducer,
     [productsByCategoryApi.reducerPath]: productsByCategoryApi.reducer,
+    [productsApi.reducerPath]: productsApi.reducer,
     [categoriesApi.reducerPath]: categoriesApi.reducer,
   },
 
@@ -15,6 +17,7 @@ export const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
       .concat(productsByCategoryApi.middleware)
+      .concat(productsApi.middleware)
       .concat(categoriesApi.middleware),
 });
 

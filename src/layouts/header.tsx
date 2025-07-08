@@ -25,7 +25,7 @@ export default function Header() {
     <>
       <header className="w-full bg-blue-600 dark:bg-amber-50 text-white dark:text-black p-4">
         <div className="container mx-auto flex justify-between items-center">
-          <img src={Latnight} alt="FastFood Logo" className="w-34 h-34" />
+          <img src={Latnight} alt="FastFood Logo" className="w-30 h-30 " />
           <HeaderNavbar categories={categories} />
           <div className="flex items-center space-x-4">
             <Tooltip text="Connexion">

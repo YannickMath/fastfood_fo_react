@@ -1,6 +1,8 @@
 // import Loader from "../components/loader";
 // import { useGetProductsByCategoryQuery } from "../services/productsByCategory";
 
+// import ProductCard from "../components/productCard";
+
 export default function Home() {
   // const {
   //   data: products,
@@ -9,14 +11,18 @@ export default function Home() {
   // } = useGetProductsByCategoryQuery("2");
 
   return (
-    <div className="w-full h-full flex flex-col items-center justify-center min-h-screen bg-gray-600">
-      <h1 className="text-4xl font-bold mb-4">Welcome to FastFood</h1>
-      <p className="text-lg text-gray-700 mb-8">
-        Your favorite food delivered fast!
-      </p>
-      <button className="btn btn-primary">Order Now</button>
-      <div className="mt-8">
-        {/* {isLoading && <Loader />}
+    <div className="min-h-screen bg-white w-full sm:grid grid-cols-4 grid-rows-3">
+      {/* <ProductCard products={products} /> */}
+      <div className="col-start-2 col-span-2 row-span-1 bg-{logo} bg-cover border border-gray-200  "></div>
+      {/* <ProductCard products={products} /> */}
+      <div className="bg-[url('/pizza.jpg')] bg-cover col-start-1 col-span-2 row-span-2 border border-gray-200   "></div>
+      <div className="bg-[url('/hamburger.jpg')] bg-cover col-start-3 col-span-4 row-span-2 border border-gray-200   "></div>
+    </div>
+  );
+}
+
+{
+  /* {isLoading && <Loader />}
         {error && (
           <p>
             Error loading products:{" "}
@@ -35,8 +41,5 @@ export default function Home() {
               </li>
             ))}
           </ul>
-        )} */}
-      </div>
-    </div>
-  );
+        )} */
 }

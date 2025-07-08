@@ -14,6 +14,7 @@ export default function Layout() {
 
   // if (isLoading) return <FullPageLoader />;
   // if (error) return <div>Erreur lors du chargement</div>;
+
   return (
     <div className="w-screen h-full flex flex-col items-center justify-center min-h-screen bg-gray-100">
       <Header />
