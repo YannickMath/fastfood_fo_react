@@ -13,10 +13,10 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-white w-full sm:grid grid-cols-4 grid-rows-3">
       {/* <ProductCard products={products} /> */}
-      <div className="col-start-2 col-span-2 row-span-1 bg-{logo} bg-cover border border-gray-200  "></div>
+      <div className="col-start-2 col-span-2 row-span-1 bg-[url(./assets/logo.png)] bg-cover border border-gray-200  "></div>
       {/* <ProductCard products={products} /> */}
-      <div className="bg-[url('/pizza.jpg')] bg-cover col-start-1 col-span-2 row-span-2 border border-gray-200   "></div>
-      <div className="bg-[url('/hamburger.jpg')] bg-cover col-start-3 col-span-4 row-span-2 border border-gray-200   "></div>
+      <div className="bg-[url(./assets/pizza.jpg)] bg-cover col-start-1 col-span-2 row-span-2 border border-gray-200   "></div>
+      <div className="bg-[url(./assets/hamburger.jpg)] bg-cover col-start-3 col-span-4 row-span-2 border border-gray-200   "></div>
     </div>
   );
 }

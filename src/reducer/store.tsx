@@ -6,10 +6,12 @@ import { categoriesApi } from "../services/categories";
 import { productsApi } from "../services/products";
 import { signupApi } from "../services/signup";
 import { loginApi } from "../services/login";
+import { checkAuthenticationApi } from "../services/checkAuthentication";
 
 export const store = configureStore({
   reducer: {
     counter: counterReducer,
+    [checkAuthenticationApi.reducerPath]: checkAuthenticationApi.reducer,
     [signupApi.reducerPath]: signupApi.reducer,
     [loginApi.reducerPath]: loginApi.reducer,
     [productsByCategoryApi.reducerPath]: productsByCategoryApi.reducer,
@@ -20,6 +22,7 @@ export const store = configureStore({
   // Adding the api middleware enables caching, invalidation, polling and other features of `rtk-query`
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
+      .concat(checkAuthenticationApi.middleware)
       .concat(signupApi.middleware)
       .concat(loginApi.middleware)
       .concat(productsByCategoryApi.middleware)

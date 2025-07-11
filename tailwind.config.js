@@ -5,5 +5,5 @@ export default {
     extend: {},
   },
   darkMode: "selector",
-  //   plugins: [require("daisyui")],
+  //   plugins: [require("daisyui")]
 };

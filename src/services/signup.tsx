@@ -7,6 +7,7 @@ type Credentials = {
 };
 
 type SignupResponse = {
+  token: string;
   // Adjust these fields to match your actual API response
   id: number;
   username: string;

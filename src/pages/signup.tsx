@@ -1,8 +1,11 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { usePostSignupMutation } from "../services/signup";
+import { useDispatch } from "react-redux";
+import { checkAuthenticationApi } from "../services/checkAuthentication";
 
 export default function Signup() {
+  const dispatch = useDispatch();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -25,6 +28,11 @@ export default function Signup() {
       setUsername("");
       setEmail("");
       setPassword("");
+      localStorage.setItem("jwt", result.token);
+      dispatch(
+        checkAuthenticationApi.util.invalidateTags(["CheckAuthentication"])
+      );
+      console.log("'localStorage' token:", localStorage.getItem("token"));
     } catch (err) {
       console.error("Signup failed:", err);
     }
