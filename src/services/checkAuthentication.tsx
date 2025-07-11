@@ -4,11 +4,7 @@ export const checkAuthenticationApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: "https://127.0.0.1:8000",
     prepareHeaders: (headers) => {
-      console.log("on passe par prepareHeaders");
-
-      // ⚠️ Déplacé ici : sera relu à chaque requête
       const token = localStorage.getItem("jwt");
-      console.log("Token from localStorage:", token);
 
       if (token) {
         headers.set("Authorization", `Bearer ${token}`);

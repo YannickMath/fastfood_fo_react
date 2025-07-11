@@ -1,20 +1,27 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { usePostSignupMutation } from "../services/signup";
 import { useDispatch } from "react-redux";
 import { checkAuthenticationApi } from "../services/checkAuthentication";
+import useNavigateToHome from "../utils/navigateToHome";
 
 export default function Signup() {
   const dispatch = useDispatch();
+  const navigateToHome = useNavigateToHome();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const [postSignup, { error, isLoading }] = usePostSignupMutation();
+  const [postSignup, { error, isLoading, isSuccess }] = usePostSignupMutation();
+
+  useEffect(() => {
+    if (isSuccess) {
+      navigateToHome();
+    }
+  }, [isSuccess, navigateToHome]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-
     if (name === "username") setUsername(value);
     if (name === "email") setEmail(value);
     if (name === "password") setPassword(value);
@@ -24,15 +31,13 @@ export default function Signup() {
     e.preventDefault();
     try {
       const result = await postSignup({ username, email, password }).unwrap();
-      console.log("Signup success:", result);
-      setUsername("");
-      setEmail("");
-      setPassword("");
       localStorage.setItem("jwt", result.token);
       dispatch(
         checkAuthenticationApi.util.invalidateTags(["CheckAuthentication"])
       );
-      console.log("'localStorage' token:", localStorage.getItem("token"));
+      setUsername("");
+      setEmail("");
+      setPassword("");
     } catch (err) {
       console.error("Signup failed:", err);
     }
