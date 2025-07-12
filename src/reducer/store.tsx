@@ -1,5 +1,4 @@
 import { configureStore } from "@reduxjs/toolkit";
-import counterReducer from "./slices/counterSlice";
 import { productsByCategoryApi } from "../services/productsByCategory";
 import { setupListeners } from "@reduxjs/toolkit/query";
 import { categoriesApi } from "../services/categories";
@@ -7,12 +6,17 @@ import { productsApi } from "../services/products";
 import { signupApi } from "../services/signup";
 import { loginApi } from "../services/login";
 import { checkAuthenticationApi } from "../services/checkAuthentication";
+import counterReducer from "./slices/counterSlice";
 import popupReducer from "./slices/popupSlice";
+import authSliceReducer from "./slices/authSlice";
+import cartSliceReducer from "./slices/cartSlice";
 
 export const store = configureStore({
   reducer: {
     counter: counterReducer,
     popup: popupReducer,
+    auth: authSliceReducer,
+    cart: cartSliceReducer,
     [checkAuthenticationApi.reducerPath]: checkAuthenticationApi.reducer,
     [signupApi.reducerPath]: signupApi.reducer,
     [loginApi.reducerPath]: loginApi.reducer,

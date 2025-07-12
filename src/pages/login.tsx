@@ -1,9 +1,11 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { usePostLoginMutation } from "../services/login";
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { checkAuthenticationApi } from "../services/checkAuthentication";
-import { useNavigate } from "react-router-dom";
+import { setAuthenticated, setUser } from "../reducer/slices/authSlice";
+import { showPopup } from "../reducer/slices/popupSlice";
+import Popup from "../components/popup";
 
 export default function Login() {
   const dispatch = useDispatch();
@@ -11,24 +13,34 @@ export default function Login() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
   const [postLogin, { error, isLoading, isSuccess }] = usePostLoginMutation();
+
+  useEffect(() => {
+    if (isSuccess) {
+      dispatch(showPopup("Login successful!"));
+      navigate("/");
+    }
+  }, [isSuccess, navigate, dispatch]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    if (name === "password") setPassword(value);
     if (name === "email") setEmail(value);
+    if (name === "password") setPassword(value);
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       const result = await postLogin({ email, password }).unwrap();
+      const { token, ...userData } = result;
 
-      localStorage.setItem("jwt", result.token);
+      localStorage.setItem("jwt", token);
+      dispatch(setAuthenticated(true));
+      dispatch(setUser(userData));
+
       dispatch(
         checkAuthenticationApi.util.invalidateTags(["CheckAuthentication"])
-      ); // refresh auth status
+      );
 
       setEmail("");
       setPassword("");
@@ -36,12 +48,6 @@ export default function Login() {
       console.error("Login failed:", err);
     }
   };
-
-  useEffect(() => {
-    if (isSuccess) {
-      navigate("/");
-    }
-  }, [isSuccess, navigate]);
 
   return (
     <div className="flex h-screen flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -56,7 +62,7 @@ export default function Login() {
           <div>
             <label
               htmlFor="email"
-              className="block text-sm font-medium leading-6 text-gray-900"
+              className="block text-sm font-medium text-gray-900"
             >
               Email address
             </label>
@@ -65,17 +71,17 @@ export default function Login() {
               name="email"
               type="email"
               required
-              placeholder="Enter your email"
-              className="block w-full rounded-md border py-1.5 px-2 text-gray-900 shadow-sm"
-              onChange={handleChange}
               value={email}
+              onChange={handleChange}
+              placeholder="Enter your email"
+              className="mt-2 block w-full rounded-md border py-1.5 px-2 text-gray-900 shadow-sm"
             />
           </div>
 
           <div>
             <label
               htmlFor="password"
-              className="block text-sm font-medium leading-6 text-gray-900"
+              className="block text-sm font-medium text-gray-900"
             >
               Password
             </label>
@@ -84,9 +90,9 @@ export default function Login() {
               name="password"
               type="password"
               required
-              className="block w-full rounded-md border py-1.5 px-2 text-gray-900 shadow-sm"
-              onChange={handleChange}
               value={password}
+              onChange={handleChange}
+              className="mt-2 block w-full rounded-md border py-1.5 px-2 text-gray-900 shadow-sm"
             />
           </div>
 
@@ -99,6 +105,8 @@ export default function Login() {
               {isLoading ? "Logging in..." : "Login"}
             </button>
           </div>
+
+          {isSuccess && <Popup />}
 
           {error && (
             <p className="text-red-600 text-sm mt-2">

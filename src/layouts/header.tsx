@@ -1,19 +1,29 @@
-import { RiAccountCircleLine } from "react-icons/ri";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { logout } from "../reducer/slices/authSlice";
+import { showPopup } from "../reducer/slices/popupSlice";
+import type { RootState } from "../reducer/store";
+import { RiAccountCircleLine, RiLogoutCircleRLine } from "react-icons/ri";
 import { FaShoppingCart } from "react-icons/fa";
 import ToggleDark from "../components/toggleDark";
-import Latnight from "../assets/Latnight.jpeg";
-import { useNavigate } from "react-router-dom";
 import HeaderNavbar from "../components/headerNavbar";
 import Tooltip from "../components/tooltip";
-import useIsUserConnected from "../hooks/isUserConnected";
-import { RiLogoutCircleRLine } from "react-icons/ri";
-import { showPopup } from "../reducer/slices/popupSlice";
-import { useDispatch } from "react-redux";
+import Latnight from "../assets/Latnight.jpeg";
+import React, { useEffect } from "react";
 
 export default function Header() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { isUserConnected, isLoading } = useIsUserConnected();
+
+  const [authChecked, setAuthChecked] = React.useState(false);
+
+  const isAuthenticated = useSelector(
+    (state: RootState) => state.auth.isAuthenticated
+  );
+
+  useEffect(() => {
+    setAuthChecked(true);
+  }, [isAuthenticated]);
 
   const handleLogin = () => {
     navigate("/login");
@@ -21,9 +31,9 @@ export default function Header() {
 
   const handleLogout = () => {
     localStorage.removeItem("jwt");
+    dispatch(logout());
+    dispatch(showPopup("Disconnected successfully!"));
     navigate("/");
-    dispatch(showPopup("Deconnection in process !"));
-    window.location.reload();
   };
 
   const handleCart = () => {
@@ -41,38 +51,34 @@ export default function Header() {
   return (
     <header className="w-full bg-blue-600 dark:bg-amber-50 text-white dark:text-black p-4">
       <div className="container mx-auto flex justify-between items-center">
-        <img src={Latnight} alt="FastFood Logo" className="w-30 h-30 " />
+        <img src={Latnight} alt="FastFood Logo" className="w-30 h-30" />
         <HeaderNavbar categories={categories} />
         <div className="flex items-center space-x-4">
-          {!isLoading && (
-            <>
-              {isUserConnected ? (
+          {authChecked ? (
+            isAuthenticated ? (
+              <>
                 <Tooltip text="Panier">
                   <FaShoppingCart
                     className="w-8 h-8 cursor-pointer"
                     onClick={handleCart}
                   />
                 </Tooltip>
-              ) : (
-                <Tooltip text="Connexion">
-                  <RiAccountCircleLine
-                    className="w-8 h-8 cursor-pointer"
-                    onClick={handleLogin}
-                  />
-                </Tooltip>
-              )}
-              {isUserConnected && (
-                <Tooltip text="Deconnection">
+                <Tooltip text="Déconnexion">
                   <RiLogoutCircleRLine
                     className="w-8 h-8 cursor-pointer"
-                    onClick={() => {
-                      handleLogout();
-                    }}
+                    onClick={handleLogout}
                   />
                 </Tooltip>
-              )}
-            </>
-          )}
+              </>
+            ) : (
+              <Tooltip text="Connexion">
+                <RiAccountCircleLine
+                  className="w-8 h-8 cursor-pointer"
+                  onClick={handleLogin}
+                />
+              </Tooltip>
+            )
+          ) : null}
           <ToggleDark />
         </div>
       </div>

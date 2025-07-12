@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { usePostSignupMutation } from "../services/signup";
 import { useDispatch } from "react-redux";
-import { checkAuthenticationApi } from "../services/checkAuthentication";
+import { setAuthenticated, setUser } from "../reducer/slices/authSlice";
+import { showPopup } from "../reducer/slices/popupSlice";
 import useNavigateToHome from "../utils/navigateToHome";
 import Popup from "../components/popup";
-import { showPopup } from "../reducer/slices/popupSlice";
 
 export default function Signup() {
   const dispatch = useDispatch();
@@ -14,14 +14,8 @@ export default function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const [postSignup, { error, isLoading, isSuccess }] = usePostSignupMutation();
-
-  useEffect(() => {
-    if (isSuccess) {
-      dispatch(showPopup("Account created successfully!"));
-      navigateToHome();
-    }
-  }, [isSuccess, navigateToHome]);
+  const [postSignup, { error, isLoading }] = usePostSignupMutation();
+  const [showSuccess, setShowSuccess] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -34,13 +28,22 @@ export default function Signup() {
     e.preventDefault();
     try {
       const result = await postSignup({ username, email, password }).unwrap();
-      localStorage.setItem("jwt", result.token);
-      dispatch(
-        checkAuthenticationApi.util.invalidateTags(["CheckAuthentication"])
-      );
+      const { token, ...userData } = result;
+
+      localStorage.setItem("jwt", token);
+      dispatch(setAuthenticated(true));
+      dispatch(setUser(userData));
+      dispatch(showPopup("Account created successfully!"));
+
+      setShowSuccess(true);
       setUsername("");
       setEmail("");
       setPassword("");
+
+      // Attend un petit instant pour afficher le popup avant de rediriger
+      setTimeout(() => {
+        navigateToHome();
+      }, 1000);
     } catch (err) {
       console.error("Signup failed:", err);
     }
@@ -120,7 +123,8 @@ export default function Signup() {
               {isLoading ? "Signing up..." : "Sign up"}
             </button>
           </div>
-          {isSuccess && <Popup />}
+
+          {showSuccess && <Popup />}
 
           {error && (
             <p className="text-red-600 text-sm mt-2">

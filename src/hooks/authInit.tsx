@@ -1,0 +1,32 @@
+import { useCheckAuthenticationQuery } from "../services/checkAuthentication";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { setAuthenticated, logout } from "../reducer/slices/authSlice";
+
+export default function useAuthInit() {
+  const dispatch = useDispatch();
+  const token = localStorage.getItem("jwt");
+
+  const { data, isLoading, isError } = useCheckAuthenticationQuery(undefined, {
+    skip: !token, // skip si pas de token
+  });
+
+  console.log("on passe dans useAuthInit", data, isLoading, isError);
+
+  useEffect(() => {
+    if (!token) {
+      dispatch(setAuthenticated(false));
+      dispatch(logout());
+      return;
+    }
+
+    if (data) {
+      dispatch(setAuthenticated(true));
+    } else if (isError) {
+      dispatch(setAuthenticated(false));
+      dispatch(logout());
+    }
+  }, [data, isError, dispatch, token]);
+
+  return { isLoading };
+}
