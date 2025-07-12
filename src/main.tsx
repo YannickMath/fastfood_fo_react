@@ -11,6 +11,8 @@ import { Suspense } from "react";
 
 const Layout = lazy(() => import("./layouts/layout.tsx"));
 const Home = lazy(() => import("./pages/home.tsx"));
+const Burgers = lazy(() => import("./pages/burgers.tsx"));
+const Cart = lazy(() => import("./pages/cart.tsx"));
 
 createRoot(document.getElementById("root")!).render(
   <Provider store={store}>
@@ -22,6 +24,8 @@ createRoot(document.getElementById("root")!).render(
               <Route index element={<Home />} />
               <Route path="login" element={<Login />} />
               <Route path="signup" element={<Signup />} />
+              <Route path="burgers" element={<Burgers />} />
+              <Route path="cart" element={<Cart />} />
             </Route>
           </Routes>
         </Suspense>

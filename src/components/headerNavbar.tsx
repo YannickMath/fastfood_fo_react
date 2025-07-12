@@ -7,7 +7,7 @@ interface HeaderNavbarProps {
 export default function HeaderNavbar({ categories }: HeaderNavbarProps) {
   const categoriesMap = categories?.map((category) => (
     <li key={category.id}>
-      <Link to={`/products/${category.type}`} className="hover:underline">
+      <Link to={`/${category.type.toLowerCase()}/`} className="hover:underline">
         {category.type}
       </Link>
     </li>

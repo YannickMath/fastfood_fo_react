@@ -4,6 +4,8 @@ import { usePostSignupMutation } from "../services/signup";
 import { useDispatch } from "react-redux";
 import { checkAuthenticationApi } from "../services/checkAuthentication";
 import useNavigateToHome from "../utils/navigateToHome";
+import Popup from "../components/popup";
+import { showPopup } from "../reducer/slices/popupSlice";
 
 export default function Signup() {
   const dispatch = useDispatch();
@@ -16,6 +18,7 @@ export default function Signup() {
 
   useEffect(() => {
     if (isSuccess) {
+      dispatch(showPopup("Account created successfully!"));
       navigateToHome();
     }
   }, [isSuccess, navigateToHome]);
@@ -117,6 +120,7 @@ export default function Signup() {
               {isLoading ? "Signing up..." : "Sign up"}
             </button>
           </div>
+          {isSuccess && <Popup />}
 
           {error && (
             <p className="text-red-600 text-sm mt-2">

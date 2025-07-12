@@ -7,10 +7,12 @@ import { productsApi } from "../services/products";
 import { signupApi } from "../services/signup";
 import { loginApi } from "../services/login";
 import { checkAuthenticationApi } from "../services/checkAuthentication";
+import popupReducer from "./slices/popupSlice";
 
 export const store = configureStore({
   reducer: {
     counter: counterReducer,
+    popup: popupReducer,
     [checkAuthenticationApi.reducerPath]: checkAuthenticationApi.reducer,
     [signupApi.reducerPath]: signupApi.reducer,
     [loginApi.reducerPath]: loginApi.reducer,

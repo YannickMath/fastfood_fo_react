@@ -7,9 +7,12 @@ import HeaderNavbar from "../components/headerNavbar";
 import Tooltip from "../components/tooltip";
 import useIsUserConnected from "../hooks/isUserConnected";
 import { RiLogoutCircleRLine } from "react-icons/ri";
+import { showPopup } from "../reducer/slices/popupSlice";
+import { useDispatch } from "react-redux";
 
 export default function Header() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { isUserConnected, isLoading } = useIsUserConnected();
 
   const handleLogin = () => {
@@ -19,6 +22,7 @@ export default function Header() {
   const handleLogout = () => {
     localStorage.removeItem("jwt");
     navigate("/");
+    dispatch(showPopup("Deconnection in process !"));
     window.location.reload();
   };
 
