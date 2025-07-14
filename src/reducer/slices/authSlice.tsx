@@ -17,7 +17,6 @@ const initialState: AuthState = {
   isAuthenticated: false,
   user: null,
 };
-console.log("roles", initialState);
 
 const authSlice = createSlice({
   name: "auth",

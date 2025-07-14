@@ -6,39 +6,73 @@ export type CartItem = {
   name: string;
   price: number;
   quantity: number;
-  image?: string;
 };
 
 interface CartState {
   items: CartItem[];
+  total: number;
 }
 
 const initialState: CartState = {
-  items: [],
+  items: JSON.parse(sessionStorage.getItem("cartItems") || "[]"),
+  total: 0,
+};
+
+const calculateTotal = (items: CartItem[]) =>
+  items.reduce((acc, item) => acc + item.price * item.quantity, 0);
+
+const saveToSession = (items: CartItem[]) => {
+  sessionStorage.setItem("cartItems", JSON.stringify(items));
 };
 
 const cartSlice = createSlice({
   name: "cart",
-  initialState,
+  initialState: {
+    ...initialState,
+    total: calculateTotal(initialState.items),
+  },
   reducers: {
-    addToCart: (state, action: PayloadAction<CartItem>) => {
-      const existingItem = state.items.find(
+    addItem: (state, action: PayloadAction<CartItem>) => {
+      const existing = state.items.find(
         (item) => item.id === action.payload.id
       );
-      if (existingItem) {
-        existingItem.quantity += action.payload.quantity;
+      if (existing) {
+        existing.quantity += 1;
       } else {
-        state.items.push(action.payload);
+        state.items.push({ ...action.payload, quantity: 1 });
+      }
+      state.total = calculateTotal(state.items);
+      saveToSession(state.items);
+    },
+
+    removeOneItem: (state, action: PayloadAction<number>) => {
+      const item = state.items.find((i) => i.id === action.payload);
+      if (item) {
+        if (item.quantity > 1) {
+          item.quantity -= 1;
+        } else {
+          state.items = state.items.filter((i) => i.id !== action.payload);
+        }
+        state.total = calculateTotal(state.items);
+        saveToSession(state.items);
       }
     },
-    removeFromCart: (state, action: PayloadAction<number>) => {
+
+    removeItem: (state, action: PayloadAction<number>) => {
       state.items = state.items.filter((item) => item.id !== action.payload);
+      state.total = calculateTotal(state.items);
+      saveToSession(state.items);
     },
+
     clearCart: (state) => {
       state.items = [];
+      state.total = 0;
+      saveToSession(state.items);
     },
   },
 });
 
-export const { addToCart, removeFromCart, clearCart } = cartSlice.actions;
+export const { addItem, removeOneItem, removeItem, clearCart } =
+  cartSlice.actions;
+
 export default cartSlice.reducer;

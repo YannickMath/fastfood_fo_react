@@ -11,15 +11,19 @@ interface Product {
   category: number;
   image?: string;
 }
-export default function Burgers() {
+export default function Desserts() {
   const products = useSelector((state: RootState) => state.products.items);
-  const burgers = products.filter((product: Product) => product.category === 1);
+  //Filter products to only include burgers category 1
+  const desserts = products.filter(
+    (product: Product) => product.category === 1
+  );
+  //log typeof for category and products
 
   return (
     <div className="w-full min-h-screen flex flex-wrap justify-center items-center bg-gray-100">
       {!products.length && <Loader size="xl" message="Burgers loading..." />}
-      {burgers.length > 0 ? (
-        burgers.map((product: Product) => (
+      {desserts.length > 0 ? (
+        desserts.map((product: Product) => (
           <ProductCard key={product.id} product={product} />
         ))
       ) : (

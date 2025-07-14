@@ -14,7 +14,8 @@ import React, { useEffect } from "react";
 export default function Header() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+  const cartItems = useSelector((state: RootState) => state.cart.items);
+  const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
   const [authChecked, setAuthChecked] = React.useState(false);
 
   const isAuthenticated = useSelector(
@@ -54,15 +55,20 @@ export default function Header() {
         <img src={Latnight} alt="FastFood Logo" className="w-30 h-30" />
         <HeaderNavbar categories={categories} />
         <div className="flex items-center space-x-4">
+          <Tooltip text="Panier">
+            <FaShoppingCart
+              className="w-8 h-8 cursor-pointer"
+              onClick={handleCart}
+            />
+            {cartCount > 0 && (
+              <span className="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full px-2">
+                {cartCount}
+              </span>
+            )}
+          </Tooltip>
           {authChecked ? (
             isAuthenticated ? (
               <>
-                <Tooltip text="Panier">
-                  <FaShoppingCart
-                    className="w-8 h-8 cursor-pointer"
-                    onClick={handleCart}
-                  />
-                </Tooltip>
                 <Tooltip text="Déconnexion">
                   <RiLogoutCircleRLine
                     className="w-8 h-8 cursor-pointer"
@@ -73,7 +79,7 @@ export default function Header() {
             ) : (
               <Tooltip text="Connexion">
                 <RiAccountCircleLine
-                  className="w-8 h-8 cursor-pointer"
+                  className="w-8 h-8 cursor-pointer bounce"
                   onClick={handleLogin}
                 />
               </Tooltip>

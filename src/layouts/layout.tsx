@@ -5,33 +5,28 @@ import Popup from "../components/popup";
 import { setAuthenticated } from "../reducer/slices/authSlice";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
-// import { useGetCategoriesQuery } from "../services/categories";
-// import FullPageLoader from "../components/fullPageLoader";
+import { useGetProductsQuery } from "../services/products";
+import { setProducts } from "../reducer/slices/productSlice";
 
 export default function Layout() {
-  // const handleLogin = () => {
-  //   Navigate("/login");
-  // };
-
-  // const { data: categories, error, isLoading } = useGetCategoriesQuery();
-  // console.log("categories", categories, error, isLoading);
-
-  // if (isLoading) return <FullPageLoader />;
-  // if (error) return <div>Erreur lors du chargement</div>;
-
   const dispatch = useDispatch();
+
+  const { data: products } = useGetProductsQuery();
 
   useEffect(() => {
     const token = localStorage.getItem("jwt");
     if (token) dispatch(setAuthenticated(true));
   }, [dispatch]);
 
+  useEffect(() => {
+    if (products) dispatch(setProducts(products));
+  }, [products, dispatch]);
+
   return (
     <div className="w-screen h-full flex flex-col items-center justify-center min-h-screen bg-gray-100">
       <Header />
-      {/* {isLoading && <FullPageLoader />} */}
       <Popup />
-      <Outlet /> {/* Ici s’affichera Home ou About */}
+      <Outlet />
       <Footer />
     </div>
   );

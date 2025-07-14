@@ -6,6 +6,7 @@ import { setAuthenticated, setUser } from "../reducer/slices/authSlice";
 import { showPopup } from "../reducer/slices/popupSlice";
 import useNavigateToHome from "../utils/navigateToHome";
 import Popup from "../components/popup";
+import Loader from "../components/loader";
 
 export default function Signup() {
   const dispatch = useDispatch();
@@ -121,6 +122,8 @@ export default function Signup() {
               className="flex w-full justify-center rounded-md cursor-pointer bg-indigo-800 px-3 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500"
             >
               {isLoading ? "Signing up..." : "Sign up"}
+              <span className="mx-2" />
+              {isLoading ? <Loader message="Signing up..." /> : null}
             </button>
           </div>
 

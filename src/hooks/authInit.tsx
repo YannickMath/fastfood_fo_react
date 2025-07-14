@@ -10,9 +10,6 @@ export default function useAuthInit() {
   const { data, isLoading, isError } = useCheckAuthenticationQuery(undefined, {
     skip: !token, // skip si pas de token
   });
-
-  console.log("on passe dans useAuthInit", data, isLoading, isError);
-
   useEffect(() => {
     if (!token) {
       dispatch(setAuthenticated(false));
