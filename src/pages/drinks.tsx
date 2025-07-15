@@ -2,20 +2,13 @@ import { useSelector } from "react-redux";
 import ProductCard from "../components/productCard";
 import type { RootState } from "../reducer/store.tsx";
 import Loader from "../components/loader.tsx";
+import type { Product } from "../types/product.ts";
 
-interface Product {
-  id: number;
-  name: string;
-  price: number;
-  description: string;
-  category: number;
-  image?: string;
-}
 export default function Drinks() {
-  const products = useSelector((state: RootState) => state.products.items);
-  //Filter products to only include burgers category 1
-  const drinks = products.filter((product: Product) => product.category === 4);
-  //log typeof for category and products
+  const products = useSelector(
+    (state: RootState) => state.products.items
+  ) as Product[];
+  const drinks = products.filter((product) => product.category === 4);
 
   return (
     <div className="w-full min-h-screen flex flex-wrap justify-center items-center bg-gray-100">

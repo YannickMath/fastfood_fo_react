@@ -2,16 +2,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import type { RootState } from "../reducer/store";
 import handleAddToCart from "../utils/handleAddToCart";
+import type { Product } from "../types/product";
 
-interface Product {
-  id: number;
-  name: string;
-  description: string;
-  price: number;
-  quantity: number;
-  category: number;
-  image?: string;
-}
 export default function AdvertisementCard({ product }: { product: Product }) {
   const dispatch = useDispatch();
   const isAuthenticated = useSelector(

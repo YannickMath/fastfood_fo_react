@@ -2,22 +2,13 @@ import { useSelector } from "react-redux";
 import ProductCard from "../components/productCard";
 import type { RootState } from "../reducer/store.tsx";
 import Loader from "../components/loader.tsx";
+import type { Product } from "../types/product.ts";
 
-interface Product {
-  id: number;
-  name: string;
-  price: number;
-  description: string;
-  category: number;
-  image?: string;
-}
 export default function Burgers() {
-  const products = useSelector((state: RootState) => state.products.items);
-  const burgers = products.filter((product: Product) => product.category === 1);
-  const isAuthenticated = useSelector(
-    (state: RootState) => state.auth.isAuthenticated
-  );
-  console.log("isAuthenticated", isAuthenticated);
+  const products = useSelector(
+    (state: RootState) => state.products.items
+  ) as Product[];
+  const burgers = products.filter((product) => product.category === 1);
 
   return (
     <div className="w-full min-h-screen flex flex-wrap justify-center items-center bg-gray-100">

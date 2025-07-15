@@ -1,16 +1,15 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { usePostSignupMutation } from "../services/signup";
 import { useDispatch } from "react-redux";
 import { setAuthenticated, setUser } from "../reducer/slices/authSlice";
 import { showPopup } from "../reducer/slices/popupSlice";
-import useNavigateToHome from "../utils/navigateToHome";
 import Popup from "../components/popup";
 import Loader from "../components/loader";
 
 export default function Signup() {
   const dispatch = useDispatch();
-  const navigateToHome = useNavigateToHome();
+  const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -43,7 +42,7 @@ export default function Signup() {
       sessionStorage.clear();
 
       setTimeout(() => {
-        navigateToHome();
+        navigate("/");
       }, 1000);
     } catch (err) {
       console.error("Signup failed:", err);
