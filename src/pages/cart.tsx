@@ -12,6 +12,8 @@ export default function Cart() {
   const dispatch = useDispatch();
 
   const cartItems = useSelector((state: RootState) => state.cart.items);
+  console.log("cartitem.length", cartItems.length);
+  console.log("cartItems", cartItems);
   const handleShowPopup = (message: string) => {
     dispatch(showPopup(message));
   };

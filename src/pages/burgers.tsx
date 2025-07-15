@@ -14,6 +14,10 @@ interface Product {
 export default function Burgers() {
   const products = useSelector((state: RootState) => state.products.items);
   const burgers = products.filter((product: Product) => product.category === 1);
+  const isAuthenticated = useSelector(
+    (state: RootState) => state.auth.isAuthenticated
+  );
+  console.log("isAuthenticated", isAuthenticated);
 
   return (
     <div className="w-full min-h-screen flex flex-wrap justify-center items-center bg-gray-100">

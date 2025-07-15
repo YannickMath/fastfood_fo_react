@@ -13,11 +13,10 @@ interface Product {
 }
 export default function Desserts() {
   const products = useSelector((state: RootState) => state.products.items);
-  //Filter products to only include burgers category 1
+
   const desserts = products.filter(
-    (product: Product) => product.category === 1
+    (product: Product) => product.category === 5
   );
-  //log typeof for category and products
 
   return (
     <div className="w-full min-h-screen flex flex-wrap justify-center items-center bg-gray-100">

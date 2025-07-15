@@ -41,7 +41,6 @@ export default function Signup() {
       setEmail("");
       setPassword("");
 
-      // Attend un petit instant pour afficher le popup avant de rediriger
       setTimeout(() => {
         navigateToHome();
       }, 1000);

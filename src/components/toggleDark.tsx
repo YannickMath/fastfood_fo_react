@@ -22,7 +22,7 @@ export default function ToggleDark() {
       <input
         type="checkbox"
         value="synthwave"
-        className="toggle theme-controller"
+        className="toggle theme-controller text-black dark:text-white"
         onClick={toggleDarkMode}
         aria-label="Toggle dark mode"
         title="Toggle dark mode"

@@ -1,6 +1,7 @@
-import { useDispatch } from "react-redux";
-import { addItem } from "../reducer/slices/cartSlice";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import type { RootState } from "../reducer/store";
+import handleAddToCart from "../utils/handleAddToCart";
 
 interface Product {
   id: number;
@@ -8,25 +9,22 @@ interface Product {
   description: string;
   price: number;
   quantity: number;
-  category: number; // Optional type for advertisement
-  image?: string; // Optional image URL
+  category: number;
+  image?: string;
 }
 export default function AdvertisementCard({ product }: { product: Product }) {
   const dispatch = useDispatch();
+  const isAuthenticated = useSelector(
+    (state: RootState) => state.auth.isAuthenticated
+  );
 
-  const addToCart = () => {
-    dispatch(
-      addItem({
-        id: product.id,
-        name: product.name,
-        price: product.price,
-        quantity: 1,
-      })
-    );
+  const categoryName: Record<number, string> = {
+    1: "Burger",
+    2: "Pizza",
   };
 
   return (
-    <div className="h-full flex flex-col justify-around bg-black border border-gray-200 shadow dark:bg-gray-800 dark:border-gray-700">
+    <div className="h-full flex flex-col justify-around bg-black border border-gray-200 shadow ">
       <Link to="/burgers" className="flex justify-center items-center">
         <img
           className="rounded-t-lg bg-cover max-h-[200px] w-full"
@@ -35,19 +33,19 @@ export default function AdvertisementCard({ product }: { product: Product }) {
         />
       </Link>
       <div className="text-center pb-5">
-        <h5 className="text-xl text-white font-semibold tracking-tight dark:text-white">
-          {product.category === 2 ? "La" : "Le"} {product.category} du mois !{" "}
-          {product.name}
+        <h5 className="text-xl text-white font-semibold tracking-tight ">
+          {product.category === 2 ? "La " : "Le "}
+          {categoryName[product.category]} du mois ! {product.name}
         </h5>
         <div className="flex items-center sm:justify-around justify-center mt-2 p-2">
           <span className="text-xl font-bold text-white">
             {product.price / 100} €
           </span>
           <button
-            onClick={addToCart}
-            className="text-white bg-blue-700 hover:bg-blue-800 font-medium cursor-pointer rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            onClick={() => handleAddToCart(product, isAuthenticated, dispatch)}
+            className="text-white bg-blue-700 hover:bg-blue-800 font-medium cursor-pointer rounded-lg text-sm px-5 py-2.5 text-center"
           >
-            Acheter
+            Order
           </button>
         </div>
       </div>

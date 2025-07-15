@@ -14,7 +14,7 @@ interface Product {
 export default function Drinks() {
   const products = useSelector((state: RootState) => state.products.items);
   //Filter products to only include burgers category 1
-  const drinks = products.filter((product: Product) => product.category === 1);
+  const drinks = products.filter((product: Product) => product.category === 4);
   //log typeof for category and products
 
   return (

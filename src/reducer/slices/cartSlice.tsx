@@ -22,7 +22,11 @@ const calculateTotal = (items: CartItem[]) =>
   items.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
 const saveToSession = (items: CartItem[]) => {
-  sessionStorage.setItem("cartItems", JSON.stringify(items));
+  const auth = JSON.parse(sessionStorage.getItem("auth") || "null");
+  const isAuthenticated = auth?.isAuthenticated;
+  if (!isAuthenticated) {
+    sessionStorage.setItem("cartItems", JSON.stringify(items));
+  }
 };
 
 const cartSlice = createSlice({
