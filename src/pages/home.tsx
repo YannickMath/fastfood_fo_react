@@ -1,5 +1,5 @@
 import AdvertisementCard from "../components/advertisementCard";
-// 2,Le cheese1,"Steak, fromage, salade, tomate, oignons, cornichons, ketchup, moutarde",699,1
+
 const burgerAdvertisement = {
   id: 2,
   name: "Le cheese",
@@ -7,19 +7,18 @@ const burgerAdvertisement = {
     "Steak, fromage, salade, tomate, oignons, cornichons, ketchup, moutarde",
   price: 699,
   quantity: 1,
-  category: 1, // Optional type for advertisement
-  image: "/beefCrispy.jpg", // Optional image URL
+  category: 1,
+  image: "/beefCrispy.jpg",
 };
 
 const pizzaAdvertisement = {
-  // 12,La Calzone,"Tomate, mozzarella, jambon, champignons, oeuf",1099,2
   id: 12,
   name: "La Calzone",
   description: "Tomate, mozzarella, jambon, champignons, oeuf",
   price: 1099,
   quantity: 2,
-  category: 2, // Optional type for advertisement
-  image: "/pizzaChampetre.jpg", // Optional image URL
+  category: 2,
+  image: "/pizzaChampetre.jpg",
 };
 
 export default function Home() {

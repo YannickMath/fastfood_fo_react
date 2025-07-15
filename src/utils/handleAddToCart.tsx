@@ -9,7 +9,6 @@ type CartItem = {
   quantity: number;
 };
 
-// Define the Product type if not already imported
 type Product = {
   id: number;
   name: string;

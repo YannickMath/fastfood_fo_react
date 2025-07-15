@@ -8,7 +8,7 @@ export default function useAuthInit() {
   const token = localStorage.getItem("jwt");
 
   const { data, isLoading, isError } = useCheckAuthenticationQuery(undefined, {
-    skip: !token, // skip si pas de token
+    skip: !token,
   });
   useEffect(() => {
     if (!token) {

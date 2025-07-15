@@ -9,7 +9,7 @@ import {
   PURGE,
   REGISTER,
 } from "redux-persist";
-import storage from "redux-persist/lib/storage"; // localStorage
+import storage from "redux-persist/lib/storage";
 
 import { setupListeners } from "@reduxjs/toolkit/query";
 
@@ -40,7 +40,6 @@ const productPersistConfig = {
   storage,
 };
 
-// Combine les reducers avec ceux qu'on veut persister
 const rootReducer = combineReducers({
   counter: counterReducer,
   popup: popupReducer,

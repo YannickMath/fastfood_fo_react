@@ -1,4 +1,3 @@
-// components/Popup.tsx
 import { useSelector, useDispatch } from "react-redux";
 import type { RootState } from "../reducer/store";
 import { hidePopup } from "../reducer/slices/popupSlice";

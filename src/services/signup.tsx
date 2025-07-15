@@ -8,11 +8,9 @@ type Credentials = {
 
 type SignupResponse = {
   token: string;
-  // Adjust these fields to match your actual API response
   id: number;
   username: string;
   email: string;
-  // Add other fields as needed
 };
 
 export const signupApi = createApi({
