@@ -40,6 +40,7 @@ export default function Signup() {
       setUsername("");
       setEmail("");
       setPassword("");
+      sessionStorage.clear();
 
       setTimeout(() => {
         navigateToHome();

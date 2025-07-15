@@ -44,6 +44,7 @@ export default function Login() {
 
       setEmail("");
       setPassword("");
+      sessionStorage.clear();
     } catch (err) {
       console.error("Login failed:", err);
     }

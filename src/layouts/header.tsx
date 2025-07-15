@@ -7,8 +7,8 @@ import HeaderNavbar from "../components/headerNavbar";
 import Tooltip from "../components/tooltip";
 import Latnight from "../assets/Latnight.jpeg";
 import { CartCount } from "../utils/cartCount";
-import handleLogout from "../utils/handleLogout.";
 import type { RootState } from "../reducer/store";
+import useHandleLogout from "../utils/handleLogout.";
 
 export default function Header() {
   const navigate = useNavigate();
@@ -19,6 +19,8 @@ export default function Header() {
   const handleLogin = () => navigate("/login");
 
   const handleCart = () => navigate("/cart");
+
+  const handleLogout = useHandleLogout();
 
   const categories = [
     { id: 1, type: "Burgers" },
