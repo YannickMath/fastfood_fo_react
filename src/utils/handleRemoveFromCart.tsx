@@ -1,22 +1,6 @@
-import { removeOneItem } from "../reducer/slices/cartSlice";
-import type { AppDispatch } from "../reducer/store";
-
-type CartItem = {
-  id: number;
-  name: string;
-  description?: string;
-  price: number;
-  quantity: number;
-};
-
-type Product = {
-  id: number;
-  name: string;
-  description: string;
-  image?: string;
-  price: number;
-};
-
+import { removeOneItem, type CartItem } from "../redux/reducers/cartSlice";
+import type { AppDispatch } from "../redux/store";
+import type { Product } from "../types/product";
 export default function handleRemoveFromCart(
   product: Product,
   isAuthenticated: boolean,

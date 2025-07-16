@@ -7,7 +7,7 @@ import HeaderNavbar from "../components/headerNavbar";
 import Tooltip from "../components/tooltip";
 import Latnight from "../assets/Latnight.jpeg";
 import { CartCount } from "../utils/cartCount";
-import type { RootState } from "../reducer/store";
+import type { RootState } from "../redux/store";
 import useHandleLogout from "../utils/handleLogout.";
 
 export default function Header() {

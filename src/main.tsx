@@ -2,7 +2,7 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./index.css";
-import { store, persistor } from "./reducer/store.tsx";
+import { store, persistor } from "./redux/store.tsx";
 import { Provider } from "react-redux";
 import Signup from "./pages/signup.tsx";
 import Login from "./pages/login.tsx";

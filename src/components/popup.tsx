@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
-import type { RootState } from "../reducer/store";
-import { hidePopup } from "../reducer/slices/popupSlice";
+import type { RootState } from "../redux/store";
+import { hidePopup } from "../redux/reducers/popupSlice";
 import { useEffect } from "react";
 
 export default function Popup() {

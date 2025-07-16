@@ -1,7 +1,7 @@
 import { useCheckAuthenticationQuery } from "../services/checkAuthentication";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { setAuthenticated, logout } from "../reducer/slices/authSlice";
+import { setAuthenticated, logout } from "../redux/reducers/authSlice";
 
 export default function useAuthInit() {
   const dispatch = useDispatch();

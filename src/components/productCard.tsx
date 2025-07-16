@@ -1,16 +1,9 @@
 import { useSelector } from "react-redux";
-import { useAppDispatch } from "../reducer/hooks";
-import type { RootState } from "../reducer/store";
+import { useAppDispatch } from "../redux/hooks";
+import type { RootState } from "../redux/store";
 import handleAddToCart from "../utils/handleAddToCart";
 import handleRemoveFromCart from "../utils/handleRemoveFromCart";
-
-type Product = {
-  id: number;
-  name: string;
-  description: string;
-  price: number;
-  image?: string;
-};
+import type { Product } from "../types/product";
 
 export default function ProductCard({ product }: { product: Product }) {
   const dispatch = useAppDispatch();

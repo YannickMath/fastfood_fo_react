@@ -3,9 +3,10 @@ import { usePostLoginMutation } from "../services/login";
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { checkAuthenticationApi } from "../services/checkAuthentication";
-import { setAuthenticated, setUser } from "../reducer/slices/authSlice";
-import { showPopup } from "../reducer/slices/popupSlice";
+import { setAuthenticated, setUser } from "../redux/reducers/authSlice";
+import { showPopup } from "../redux/reducers/popupSlice";
 import Popup from "../components/popup";
+import SyncCart from "../utils/syncCart";
 
 export default function Login() {
   const dispatch = useDispatch();
@@ -36,6 +37,7 @@ export default function Login() {
 
       localStorage.setItem("jwt", token);
       dispatch(setAuthenticated(true));
+      SyncCart(dispatch);
       dispatch(setUser(userData));
 
       dispatch(
@@ -44,7 +46,6 @@ export default function Login() {
 
       setEmail("");
       setPassword("");
-      sessionStorage.clear();
     } catch (err) {
       console.error("Login failed:", err);
     }

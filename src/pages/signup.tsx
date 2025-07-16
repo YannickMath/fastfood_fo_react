@@ -2,10 +2,11 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { usePostSignupMutation } from "../services/signup";
 import { useDispatch } from "react-redux";
-import { setAuthenticated, setUser } from "../reducer/slices/authSlice";
-import { showPopup } from "../reducer/slices/popupSlice";
+import { setAuthenticated, setUser } from "../redux/reducers/authSlice";
+import { showPopup } from "../redux/reducers/popupSlice";
 import Popup from "../components/popup";
 import Loader from "../components/loader";
+import SyncCart from "../utils/syncCart";
 
 export default function Signup() {
   const dispatch = useDispatch();
@@ -32,6 +33,7 @@ export default function Signup() {
 
       localStorage.setItem("jwt", token);
       dispatch(setAuthenticated(true));
+      SyncCart(dispatch);
       dispatch(setUser(userData));
       dispatch(showPopup("Account created successfully!"));
 
@@ -39,7 +41,6 @@ export default function Signup() {
       setUsername("");
       setEmail("");
       setPassword("");
-      sessionStorage.clear();
 
       setTimeout(() => {
         navigate("/");

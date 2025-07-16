@@ -14,7 +14,7 @@ interface CartState {
 }
 
 const initialState: CartState = {
-  items: JSON.parse(sessionStorage.getItem("cartItems") || "[]"),
+  items: JSON.parse(sessionStorage.getItem("cart") || "[]"),
   total: 0,
 };
 
@@ -24,8 +24,9 @@ const calculateTotal = (items: CartItem[]) =>
 const saveToSession = (items: CartItem[]) => {
   const auth = JSON.parse(sessionStorage.getItem("auth") || "null");
   const isAuthenticated = auth?.isAuthenticated;
+  console.log("isAuthenticated:", isAuthenticated);
   if (!isAuthenticated) {
-    sessionStorage.setItem("cartItems", JSON.stringify(items));
+    sessionStorage.setItem("cart", JSON.stringify(items));
   }
 };
 

@@ -1,16 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
-import type { RootState } from "../reducer/store";
+import type { RootState } from "../redux/store";
 import { useNavigate } from "react-router-dom";
-import { showPopup } from "../reducer/slices/popupSlice";
+import { showPopup } from "../redux/reducers/popupSlice";
 import Loader from "../components/loader";
 import { useEffect, useState } from "react";
-
-type CartItem = {
-  id: number;
-  name: string;
-  price: number;
-  quantity: number;
-};
+import { clearCart, type CartItem } from "../redux/reducers/cartSlice";
+import handleRemoveFromCart from "../utils/handleRemoveFromCart";
+import handleAddToCart from "../utils/handleAddToCart";
 
 export default function Cart() {
   const navigate = useNavigate();
@@ -62,9 +58,27 @@ export default function Cart() {
           <div className="mb-4">
             <h2 className="text-xl font-semibold mb-2">Items:</h2>
             <ul className="list-disc list-inside">
-              {itemsToDisplay.map(({ id, name, quantity, price }) => (
-                <li key={id}>
-                  {name} - {quantity} x {price}€
+              {itemsToDisplay.map((product) => (
+                <li key={product.id}>
+                  {product.name} - {product.quantity} x {product.price}€
+                  <div className="flex space-x-2">
+                    <button
+                      onClick={() =>
+                        handleAddToCart(product, isAuthenticated, dispatch)
+                      }
+                      className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 cursor-pointer"
+                    >
+                      +
+                    </button>
+                    <button
+                      onClick={() =>
+                        handleRemoveFromCart(product, isAuthenticated, dispatch)
+                      }
+                      className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 cursor-pointer"
+                    >
+                      -
+                    </button>
+                  </div>
                 </li>
               ))}
             </ul>
@@ -83,6 +97,20 @@ export default function Cart() {
           className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 cursor-pointer"
         >
           Proceed to Checkout
+        </button>
+        <button
+          onClick={() => {
+            if (isAuthenticated) {
+              dispatch(clearCart());
+            } else {
+              sessionStorage.removeItem("cart");
+              setGuestCartItems([]);
+            }
+            handleShowPopup("Cart cleared successfully.");
+          }}
+          className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 cursor-pointer ml-4"
+        >
+          Clear Cart
         </button>
       </div>
     </div>

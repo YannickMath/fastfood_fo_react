@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import type { RootState } from "../reducer/store";
+import type { RootState } from "../redux/store";
 import handleAddToCart from "../utils/handleAddToCart";
 import type { Product } from "../types/product";
 

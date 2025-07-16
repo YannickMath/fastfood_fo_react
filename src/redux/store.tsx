@@ -13,11 +13,11 @@ import storage from "redux-persist/lib/storage";
 
 import { setupListeners } from "@reduxjs/toolkit/query";
 
-import counterReducer from "./slices/counterSlice";
-import popupReducer from "./slices/popupSlice";
-import authSlice from "./slices/authSlice";
-import cartSlice from "./slices/cartSlice";
-import productSlice from "./slices/productSlice";
+import counterReducer from "./reducers/counterSlice";
+import popupReducer from "./reducers/popupSlice";
+import authSlice from "./reducers/authSlice";
+import cartSlice from "./reducers/cartSlice";
+import productSlice from "./reducers/productSlice";
 
 import { productsApi } from "../services/products";
 import { categoriesApi } from "../services/categories";

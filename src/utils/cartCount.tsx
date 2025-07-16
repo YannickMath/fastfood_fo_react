@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import type { RootState } from "../reducer/store";
+import type { RootState } from "../redux/store";
 
 export const CartCount = () => {
   const isAuthenticated = useSelector(

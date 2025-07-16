@@ -8,7 +8,7 @@ export default function AuthInitProvider({
 }) {
   const { isLoading } = useAuthInit();
 
-  if (isLoading) return null; // ou un spinner
+  if (isLoading) return <div>Authenticatin in process...</div>;
 
   return <>{children}</>;
 }

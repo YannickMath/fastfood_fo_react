@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import ProductCard from "../components/productCard";
-import type { RootState } from "../reducer/store.tsx";
+import type { RootState } from "../redux/store.tsx";
 import Loader from "../components/loader.tsx";
 import type { Product } from "../types/product.ts";
 

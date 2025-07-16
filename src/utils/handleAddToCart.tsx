@@ -1,21 +1,6 @@
-import { addItem } from "../reducer/slices/cartSlice";
-import type { AppDispatch } from "../reducer/store";
-
-type CartItem = {
-  id: number;
-  name: string;
-  description?: string;
-  price: number;
-  quantity: number;
-};
-
-type Product = {
-  id: number;
-  name: string;
-  description: string;
-  image?: string;
-  price: number;
-};
+import { addItem, type CartItem } from "../redux/reducers/cartSlice";
+import type { AppDispatch } from "../redux/store";
+import type { Product } from "../types/product";
 
 export default function handleAddToCart(
   product: Product,
