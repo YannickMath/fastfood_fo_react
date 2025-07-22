@@ -37,7 +37,7 @@ export default function Login() {
 
       localStorage.setItem("jwt", token);
       dispatch(setAuthenticated(true));
-      SyncCart(dispatch);
+      await SyncCart(dispatch);
       dispatch(setUser(userData));
 
       dispatch(

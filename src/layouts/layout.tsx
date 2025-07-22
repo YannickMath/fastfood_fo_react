@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { useGetProductsQuery } from "../services/products";
 import { setProducts } from "../redux/reducers/productSlice";
-import { persistor } from "../redux/store";
+// import { persistor } from "../redux/store";
 
 export default function Layout() {
   const dispatch = useDispatch();
@@ -17,7 +17,9 @@ export default function Layout() {
   useEffect(() => {
     const token = localStorage.getItem("jwt");
     if (token) dispatch(setAuthenticated(true));
-    if (!token) persistor.purge();
+    if (!token) {
+      dispatch(setAuthenticated(false));
+    }
   }, [dispatch]);
 
   useEffect(() => {

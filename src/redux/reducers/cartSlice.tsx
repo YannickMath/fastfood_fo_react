@@ -1,12 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-
-export type CartItem = {
-  id: number;
-  name: string;
-  price: number;
-  quantity: number;
-};
+import type { CartItem } from "../../types/cartItem";
 
 interface CartState {
   items: CartItem[];
@@ -19,7 +13,7 @@ const initialState: CartState = {
 };
 
 const calculateTotal = (items: CartItem[]) =>
-  items.reduce((acc, item) => acc + item.price * item.quantity, 0);
+  items.reduce((acc, item) => acc + item.productPrice * item.quantity, 0);
 
 const saveToSession = (items: CartItem[]) => {
   const auth = JSON.parse(sessionStorage.getItem("auth") || "null");
@@ -39,7 +33,7 @@ const cartSlice = createSlice({
   reducers: {
     addItem: (state, action: PayloadAction<CartItem>) => {
       const existing = state.items.find(
-        (item) => item.id === action.payload.id
+        (item) => item.productId === action.payload.productId
       );
       if (existing) {
         existing.quantity += 1;
@@ -51,12 +45,14 @@ const cartSlice = createSlice({
     },
 
     removeOneItem: (state, action: PayloadAction<number>) => {
-      const item = state.items.find((i) => i.id === action.payload);
+      const item = state.items.find((i) => i.productId === action.payload);
       if (item) {
         if (item.quantity > 1) {
           item.quantity -= 1;
         } else {
-          state.items = state.items.filter((i) => i.id !== action.payload);
+          state.items = state.items.filter(
+            (i) => i.productId !== action.payload
+          );
         }
         state.total = calculateTotal(state.items);
         saveToSession(state.items);
@@ -64,7 +60,9 @@ const cartSlice = createSlice({
     },
 
     removeItem: (state, action: PayloadAction<number>) => {
-      state.items = state.items.filter((item) => item.id !== action.payload);
+      state.items = state.items.filter(
+        (item) => item.productId !== action.payload
+      );
       state.total = calculateTotal(state.items);
       saveToSession(state.items);
     },

@@ -8,7 +8,7 @@ export default function Drinks() {
   const products = useSelector(
     (state: RootState) => state.products.items
   ) as Product[];
-  const drinks = products.filter((product) => product.category === 4);
+  const drinks = products.filter((product) => product.category === 3);
 
   return (
     <div className="w-full min-h-screen flex flex-wrap justify-center items-center bg-gray-100">

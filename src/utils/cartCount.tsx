@@ -16,14 +16,18 @@ export const CartCount = () => {
         try {
           const raw = sessionStorage.getItem("cart");
           if (!raw) return setGuestCount(0);
+
           const parsed = JSON.parse(raw);
           const items = Array.isArray(parsed) ? parsed : [parsed];
-          const count = items.reduce((total, item) => total + item.quantity, 0);
+          const count = items.reduce(
+            (total, item) => total + (item.quantity || 0),
+            0
+          );
           setGuestCount(count);
         } catch {
           setGuestCount(0);
         }
-      });
+      }, 500);
 
       return () => clearInterval(interval);
     }

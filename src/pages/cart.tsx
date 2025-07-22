@@ -4,9 +4,10 @@ import { useNavigate } from "react-router-dom";
 import { showPopup } from "../redux/reducers/popupSlice";
 import Loader from "../components/loader";
 import { useEffect, useState } from "react";
-import { clearCart, type CartItem } from "../redux/reducers/cartSlice";
 import handleRemoveFromCart from "../utils/handleRemoveFromCart";
 import handleAddToCart from "../utils/handleAddToCart";
+import { useClearCartMutation } from "../services/cart";
+import type { CartItem } from "../types/cartItem";
 
 export default function Cart() {
   const navigate = useNavigate();
@@ -15,40 +16,55 @@ export default function Cart() {
   const isAuthenticated = useSelector(
     (state: RootState) => state.auth.isAuthenticated
   );
-  const cartItemsFromStore = useSelector(
-    (state: RootState) => state.cart.items
-  );
+
+  const reduxCartItems = useSelector((state: RootState) => state.cart.items);
 
   const [guestCartItems, setGuestCartItems] = useState<CartItem[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [clearCartApi] = useClearCartMutation();
+
+  const [loadingGuest, setLoadingGuest] = useState(false);
 
   useEffect(() => {
     if (!isAuthenticated) {
-      setLoading(true);
+      setLoadingGuest(true);
       try {
         const stored = sessionStorage.getItem("cart");
         const parsed = stored ? JSON.parse(stored) : [];
-        const items = Array.isArray(parsed) ? parsed : [parsed];
-        setGuestCartItems(items);
+        setGuestCartItems(Array.isArray(parsed) ? parsed : []);
       } catch {
         setGuestCartItems([]);
       } finally {
-        setTimeout(() => setLoading(false));
+        setTimeout(() => setLoadingGuest(false), 300);
       }
     }
   }, [isAuthenticated]);
 
-  const itemsToDisplay = isAuthenticated ? cartItemsFromStore : guestCartItems;
+  const itemsToDisplay: CartItem[] = isAuthenticated
+    ? reduxCartItems
+    : guestCartItems;
+
+  const loading = isAuthenticated ? false : loadingGuest;
 
   const handleShowPopup = (message: string) => {
     dispatch(showPopup(message));
+  };
+
+  const handleClearCart = () => {
+    if (isAuthenticated) {
+      clearCartApi();
+      handleShowPopup("Cart cleared (backend).");
+    } else {
+      sessionStorage.removeItem("cart");
+      setGuestCartItems([]);
+      handleShowPopup("Cart cleared (guest).");
+    }
   };
 
   return (
     <div className="w-full min-h-screen flex flex-col items-center justify-center">
       {loading ? (
         <Loader size="xl" message="Loading cart items..." />
-      ) : itemsToDisplay.length < 1 ? (
+      ) : itemsToDisplay.length === 0 ? (
         <div className="text-center text-gray-500 text-2xl">
           Your cart is empty.
         </div>
@@ -59,8 +75,9 @@ export default function Cart() {
             <h2 className="text-xl font-semibold mb-2">Items:</h2>
             <ul className="list-disc list-inside">
               {itemsToDisplay.map((product) => (
-                <li key={product.id}>
-                  {product.name} - {product.quantity} x {product.price}€
+                <li key={product.productId}>
+                  {product.productName} - {product.quantity} x{" "}
+                  {product.productPrice}€
                   <div className="flex space-x-2">
                     <button
                       onClick={() =>
@@ -85,34 +102,29 @@ export default function Cart() {
           </div>
         </div>
       )}
-      <div className="mt-6">
-        <button
-          onClick={() => {
-            if (!isAuthenticated) {
-              handleShowPopup("Please log in to proceed.");
-            } else {
-              navigate("/checkout");
-            }
-          }}
-          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 cursor-pointer"
-        >
-          Proceed to Checkout
-        </button>
-        <button
-          onClick={() => {
-            if (isAuthenticated) {
-              dispatch(clearCart());
-            } else {
-              sessionStorage.removeItem("cart");
-              setGuestCartItems([]);
-            }
-            handleShowPopup("Cart cleared successfully.");
-          }}
-          className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 cursor-pointer ml-4"
-        >
-          Clear Cart
-        </button>
-      </div>
+
+      {!loading && (
+        <div className="mt-6">
+          <button
+            onClick={() => {
+              if (!isAuthenticated) {
+                handleShowPopup("Please log in to proceed.");
+              } else {
+                navigate("/checkout");
+              }
+            }}
+            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 cursor-pointer"
+          >
+            Proceed to Checkout
+          </button>
+          <button
+            onClick={handleClearCart}
+            className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 cursor-pointer ml-4"
+          >
+            Clear Cart
+          </button>
+        </div>
+      )}
     </div>
   );
 }

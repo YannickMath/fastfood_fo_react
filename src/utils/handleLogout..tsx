@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { logout } from "../redux/reducers/authSlice";
 import { showPopup } from "../redux/reducers/popupSlice";
+import { persistor } from "../redux/store";
 
 const useHandleLogout = () => {
   const dispatch = useDispatch();
@@ -12,7 +13,7 @@ const useHandleLogout = () => {
     localStorage.removeItem("jwt");
     dispatch(logout());
     dispatch(showPopup("Disconnected successfully!"));
-    // persistor.purge();
+    persistor.purge();
     //purge session storage
     sessionStorage.clear();
     navigate("/");

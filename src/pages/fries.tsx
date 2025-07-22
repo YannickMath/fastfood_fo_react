@@ -8,7 +8,7 @@ export default function Fries() {
   const products = useSelector(
     (state: RootState) => state.products.items
   ) as Product[];
-  const fries = products.filter((product) => product.category === 3);
+  const fries = products.filter((product) => product.category === 4);
 
   return (
     <div className="w-full min-h-screen flex flex-wrap justify-center items-center bg-gray-100">

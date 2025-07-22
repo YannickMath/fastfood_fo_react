@@ -24,6 +24,7 @@ import { categoriesApi } from "../services/categories";
 import { signupApi } from "../services/signup";
 import { loginApi } from "../services/login";
 import { checkAuthenticationApi } from "../services/checkAuthentication";
+import { cartApi } from "../services/cart";
 
 const authPersistConfig = {
   key: "auth",
@@ -52,6 +53,7 @@ const rootReducer = combineReducers({
   [loginApi.reducerPath]: loginApi.reducer,
   [productsApi.reducerPath]: productsApi.reducer,
   [categoriesApi.reducerPath]: categoriesApi.reducer,
+  [cartApi.reducerPath]: cartApi.reducer,
 });
 
 export const store = configureStore({
@@ -66,7 +68,8 @@ export const store = configureStore({
       .concat(signupApi.middleware)
       .concat(loginApi.middleware)
       .concat(productsApi.middleware)
-      .concat(categoriesApi.middleware),
+      .concat(categoriesApi.middleware)
+      .concat(cartApi.middleware),
 });
 
 export const persistor = persistStore(store);

@@ -33,7 +33,7 @@ export default function Signup() {
 
       localStorage.setItem("jwt", token);
       dispatch(setAuthenticated(true));
-      SyncCart(dispatch);
+      await SyncCart(dispatch);
       dispatch(setUser(userData));
       dispatch(showPopup("Account created successfully!"));
 
