@@ -8,19 +8,18 @@ interface CartState {
 }
 
 const initialState: CartState = {
-  items: JSON.parse(sessionStorage.getItem("cart") || "[]"),
+  items: [],
   total: 0,
 };
 
 const calculateTotal = (items: CartItem[]) =>
   items.reduce((acc, item) => acc + item.productPrice * item.quantity, 0);
 
-const saveToSession = (items: CartItem[]) => {
-  const auth = JSON.parse(sessionStorage.getItem("auth") || "null");
-  const isAuthenticated = auth?.isAuthenticated;
-  console.log("isAuthenticated:", isAuthenticated);
+const saveToSession = (items: CartItem[], isAuthenticated: boolean) => {
   if (!isAuthenticated) {
     sessionStorage.setItem("cart", JSON.stringify(items));
+  } else {
+    sessionStorage.removeItem("cart"); // nettoyage si connecté
   }
 };
 
@@ -41,7 +40,7 @@ const cartSlice = createSlice({
         state.items.push({ ...action.payload, quantity: 1 });
       }
       state.total = calculateTotal(state.items);
-      saveToSession(state.items);
+      saveToSession(state.items, true);
     },
 
     removeOneItem: (state, action: PayloadAction<number>) => {
@@ -55,7 +54,7 @@ const cartSlice = createSlice({
           );
         }
         state.total = calculateTotal(state.items);
-        saveToSession(state.items);
+        saveToSession(state.items, true);
       }
     },
 
@@ -64,13 +63,13 @@ const cartSlice = createSlice({
         (item) => item.productId !== action.payload
       );
       state.total = calculateTotal(state.items);
-      saveToSession(state.items);
+      saveToSession(state.items, true);
     },
 
     clearCart: (state) => {
       state.items = [];
       state.total = 0;
-      saveToSession(state.items);
+      saveToSession(state.items, true);
     },
   },
 });

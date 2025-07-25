@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import type { RootState } from "../redux/store";
+import { type RootState } from "../redux/store";
 import { useNavigate } from "react-router-dom";
 import { showPopup } from "../redux/reducers/popupSlice";
 import Loader from "../components/loader";
@@ -8,6 +8,7 @@ import handleRemoveFromCart from "../utils/handleRemoveFromCart";
 import handleAddToCart from "../utils/handleAddToCart";
 import { useClearCartMutation } from "../services/cart";
 import type { CartItem } from "../types/cartItem";
+import { clearCart } from "../redux/reducers/cartSlice";
 
 export default function Cart() {
   const navigate = useNavigate();
@@ -49,14 +50,13 @@ export default function Cart() {
     dispatch(showPopup(message));
   };
 
-  const handleClearCart = () => {
+  const handleClearCart = async () => {
     if (isAuthenticated) {
-      clearCartApi();
-      handleShowPopup("Cart cleared (backend).");
+      await clearCartApi().unwrap();
+      dispatch(clearCart());
     } else {
       sessionStorage.removeItem("cart");
       setGuestCartItems([]);
-      handleShowPopup("Cart cleared (guest).");
     }
   };
 

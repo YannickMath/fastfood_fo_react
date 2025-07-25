@@ -1,17 +1,51 @@
 import type { CartItem } from "../types/cartItem";
 import type { AppDispatch } from "../redux/store";
 import { cartApi } from "../services/cart";
+import { removeOneItem } from "../redux/reducers/cartSlice";
+
+interface RawProduct {
+  id: number;
+  name?: string;
+  price?: number;
+  productId?: number;
+  productName?: string;
+  productPrice?: number;
+  quantity?: number;
+}
+
+function normalizeToCartItem(product: RawProduct): CartItem {
+  return {
+    id: product.id ?? product.productId ?? 0,
+    productId: product.productId ?? product.id,
+    productName: product.productName ?? product.name ?? "Unknown",
+    productPrice: product.productPrice ?? product.price ?? 0,
+    quantity: product.quantity ?? 1,
+  };
+}
 
 export default async function handleRemoveFromCart(
-  product: CartItem,
+  rawProduct: RawProduct,
   isAuthenticated: boolean,
   dispatch: AppDispatch
 ) {
+  const product = normalizeToCartItem(rawProduct);
+
+  if (typeof product.productId !== "number") {
+    throw new Error("productId is required and must be a number.");
+  }
+
   if (isAuthenticated) {
+    // Appel backend
     await dispatch(
-      cartApi.endpoints.removeCartItem.initiate(product.productId)
+      cartApi.endpoints.updateCartItemQuantity.initiate({
+        productId: product.productId,
+      })
     ).unwrap();
+
+    // Mise à jour Redux
+    dispatch(removeOneItem(product.productId));
   } else {
+    // Gestion sessionStorage pour les invités
     const existingCart = sessionStorage.getItem("cart");
     let cartItems: CartItem[] = [];
 
@@ -19,7 +53,7 @@ export default async function handleRemoveFromCart(
       const parsed = existingCart ? JSON.parse(existingCart) : [];
       cartItems = Array.isArray(parsed) ? parsed : [parsed];
     } catch {
-      return;
+      cartItems = [];
     }
 
     const updatedCart = cartItems
@@ -28,7 +62,7 @@ export default async function handleRemoveFromCart(
           ? { ...item, quantity: item.quantity - 1 }
           : item
       )
-      .filter((item) => item.quantity > 0);
+      .filter((item) => item.quantity > 0); // supprime les produits à 0
 
     sessionStorage.setItem("cart", JSON.stringify(updatedCart));
   }

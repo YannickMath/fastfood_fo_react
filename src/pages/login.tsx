@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { usePostLoginMutation } from "../services/login";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { checkAuthenticationApi } from "../services/checkAuthentication";
 import { setAuthenticated, setUser } from "../redux/reducers/authSlice";
@@ -16,13 +16,6 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [postLogin, { error, isLoading, isSuccess }] = usePostLoginMutation();
 
-  useEffect(() => {
-    if (isSuccess) {
-      dispatch(showPopup("Login successful!"));
-      navigate("/");
-    }
-  }, [isSuccess, navigate, dispatch]);
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     if (name === "email") setEmail(value);
@@ -37,8 +30,8 @@ export default function Login() {
 
       localStorage.setItem("jwt", token);
       dispatch(setAuthenticated(true));
-      await SyncCart(dispatch);
       dispatch(setUser(userData));
+      await SyncCart(dispatch);
 
       dispatch(
         checkAuthenticationApi.util.invalidateTags(["CheckAuthentication"])
@@ -46,6 +39,9 @@ export default function Login() {
 
       setEmail("");
       setPassword("");
+      navigate("/");
+      dispatch(showPopup("Login successful!"));
+      sessionStorage.removeItem("cart");
     } catch (err) {
       console.error("Login failed:", err);
     }

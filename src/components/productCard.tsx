@@ -2,8 +2,8 @@ import { useSelector } from "react-redux";
 import { useAppDispatch } from "../redux/hooks";
 import type { RootState } from "../redux/store";
 import handleAddToCart from "../utils/handleAddToCart";
-// import handleRemoveFromCart from "../utils/handleRemoveFromCart";
 import type { Product } from "../types/product";
+import handleRemoveFromCart from "../utils/handleRemoveFromCart";
 
 export default function ProductCard({ product }: { product: Product }) {
   const dispatch = useAppDispatch();
@@ -35,9 +35,9 @@ export default function ProductCard({ product }: { product: Product }) {
               +
             </button>
             <button
-              // onClick={() =>
-              //   handleRemoveFromCart(product, isAuthenticated, dispatch)
-              // }
+              onClick={() =>
+                handleRemoveFromCart(product, isAuthenticated, dispatch)
+              }
               className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 cursor-pointer"
             >
               -
