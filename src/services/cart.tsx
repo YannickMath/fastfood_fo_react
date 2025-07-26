@@ -50,7 +50,14 @@ export const cartApi = createApi({
       }),
       invalidatesTags: ["Cart"],
     }),
-
+    mergeCart: builder.mutation<void, { items: CartItem[] }>({
+      query: (body) => ({
+        url: "/merge",
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["Cart"],
+    }),
     clearCart: builder.mutation<void, void>({
       query: () => ({
         url: "",
