@@ -38,7 +38,6 @@ export default async function handleAddToCart(
       })
     ).unwrap();
 
-    // ✅ mettre à jour Redux manuellement
     dispatch(addItem(product));
   } else {
     const existingCart = sessionStorage.getItem("cart");

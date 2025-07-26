@@ -20,7 +20,10 @@ export default async function SyncCart(dispatch: AppDispatch) {
       : [];
 
     // Fusion uniquement si session non vide
-    const mergedCart: CartItem[] = [...backendCartItems];
+    const mergedCart: CartItem[] = backendCartItems.map((item) => ({
+      ...item,
+    })); // clone chaque item
+
     sessionCartItems.forEach((itemFromSession) => {
       const found = mergedCart.find(
         (i) => i.productId === itemFromSession.productId
