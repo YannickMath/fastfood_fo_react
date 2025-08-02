@@ -115,13 +115,19 @@ export default function Cart() {
                 navigate("/checkout");
               }
             }}
-            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 cursor-pointer"
+            className={`bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 ${
+              itemsToDisplay.length !== 0 ? "cursor-pointer" : ""
+            } ${itemsToDisplay.length === 0 ? "opacity-50" : ""}`}
+            disabled={itemsToDisplay.length === 0}
           >
             Proceed to Checkout
           </button>
           <button
             onClick={handleClearCart}
-            className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 cursor-pointer ml-4"
+            className={`bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 ${
+              itemsToDisplay.length !== 0 ? "cursor-pointer" : ""
+            } ml-4 ${itemsToDisplay.length === 0 ? "opacity-50" : ""}`}
+            disabled={itemsToDisplay.length === 0}
           >
             Clear Cart
           </button>
