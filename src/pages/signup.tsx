@@ -121,9 +121,12 @@ export default function Signup() {
               disabled={isLoading}
               className="flex w-full justify-center rounded-md cursor-pointer bg-indigo-800 px-3 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500"
             >
-              {isLoading ? "Signing up..." : "Sign up"}
+              {isLoading ? (
+                <Loader size="xs" message="Signing up..." />
+              ) : (
+                "Sign up"
+              )}
               <span className="mx-2" />
-              {isLoading ? <Loader message="Signing up..." /> : null}
             </button>
           </div>
 

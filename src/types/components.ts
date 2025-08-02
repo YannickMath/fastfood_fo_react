@@ -3,7 +3,7 @@ export interface HeaderNavbarProps {
 }
 
 export interface LoaderProps {
-  size?: "s" | "m" | "l" | "xl";
+  size?: "xs" | "s" | "m" | "l" | "xl";
   message: string;
 }
 
