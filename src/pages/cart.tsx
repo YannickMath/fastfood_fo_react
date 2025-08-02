@@ -82,17 +82,31 @@ export default function Cart() {
                   {product.productPrice}€
                   <div className="flex space-x-2">
                     <button
-                      onClick={() =>
-                        handleAddToCart(product, isAuthenticated, dispatch)
-                      }
+                      onClick={async () => {
+                        const updatedCart = await handleAddToCart(
+                          product,
+                          isAuthenticated,
+                          dispatch
+                        );
+                        if (!isAuthenticated && updatedCart) {
+                          setGuestCartItems(updatedCart);
+                        }
+                      }}
                       className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 cursor-pointer"
                     >
                       +
                     </button>
                     <button
-                      onClick={() =>
-                        handleRemoveFromCart(product, isAuthenticated, dispatch)
-                      }
+                      onClick={async () => {
+                        const updatedCart = await handleRemoveFromCart(
+                          product,
+                          isAuthenticated,
+                          dispatch
+                        );
+                        if (!isAuthenticated && updatedCart) {
+                          setGuestCartItems(updatedCart);
+                        }
+                      }}
                       className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 cursor-pointer"
                     >
                       -

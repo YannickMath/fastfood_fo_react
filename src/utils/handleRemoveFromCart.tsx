@@ -44,5 +44,6 @@ export default async function handleRemoveFromCart(
       .filter((item) => item.quantity > 0);
 
     sessionStorage.setItem("cart", JSON.stringify(updatedCart));
+    return updatedCart;
   }
 }

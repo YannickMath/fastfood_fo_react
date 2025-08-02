@@ -43,5 +43,6 @@ export default async function handleAddToCart(
       : [...cartItems, product];
 
     sessionStorage.setItem("cart", JSON.stringify(updatedCart));
+    return updatedCart;
   }
 }
