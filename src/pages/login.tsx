@@ -41,7 +41,6 @@ export default function Login() {
       setPassword("");
       navigate("/");
       dispatch(showPopup("Login successful!"));
-      // sessionStorage.removeItem("cart");
     } catch (err) {
       console.error("Login failed:", err);
     }

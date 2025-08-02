@@ -1,4 +1,4 @@
-import { addItem, clearCart } from "../redux/reducers/cartSlice";
+import { clearCart, setItems } from "../redux/reducers/cartSlice";
 import type { AppDispatch } from "../redux/store";
 import { cartApi } from "../services/cart";
 import type { CartItem } from "../types/cartItem";
@@ -17,13 +17,12 @@ export default async function SyncCart(dispatch: AppDispatch) {
       sessionStorage.removeItem("cart");
     }
 
-    // Re-fetch the updated cart from backend
     const finalCart = await dispatch(
       cartApi.endpoints.getCartItems.initiate(undefined, { forceRefetch: true })
     ).unwrap();
 
     dispatch(clearCart());
-    finalCart.items.forEach((item: CartItem) => dispatch(addItem(item)));
+    dispatch(setItems(finalCart.items));
   } catch (err) {
     console.error("Cart sync error:", err);
   }

@@ -19,7 +19,7 @@ function normalizeToCartItem(product: RawProduct): CartItem {
     productId: product.productId ?? product.id,
     productName: product.productName ?? product.name ?? "Unknown",
     productPrice: product.productPrice ?? product.price ?? 0,
-    quantity: product.quantity ?? 1,
+    quantity: 1,
   };
 }
 

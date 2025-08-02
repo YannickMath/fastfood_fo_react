@@ -20,7 +20,6 @@ const pizzaAdvertisement = {
   category: 2,
   image: "/pizzaChampetre.jpg",
 };
-//console.log jwt
 const jwwt = localStorage.getItem("jwt");
 console.log("JWT:", jwwt);
 export default function Home() {

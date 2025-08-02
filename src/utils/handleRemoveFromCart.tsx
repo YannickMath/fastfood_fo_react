@@ -35,17 +35,14 @@ export default async function handleRemoveFromCart(
   }
 
   if (isAuthenticated) {
-    // Appel backend
     await dispatch(
       cartApi.endpoints.updateCartItemQuantity.initiate({
         productId: product.productId,
       })
     ).unwrap();
 
-    // Mise à jour Redux
     dispatch(removeOneItem(product.productId));
   } else {
-    // Gestion sessionStorage pour les invités
     const existingCart = sessionStorage.getItem("cart");
     let cartItems: CartItem[] = [];
 
@@ -62,7 +59,7 @@ export default async function handleRemoveFromCart(
           ? { ...item, quantity: item.quantity - 1 }
           : item
       )
-      .filter((item) => item.quantity > 0); // supprime les produits à 0
+      .filter((item) => item.quantity > 0);
 
     sessionStorage.setItem("cart", JSON.stringify(updatedCart));
   }

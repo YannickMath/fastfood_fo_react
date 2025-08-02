@@ -40,9 +40,7 @@ export default function Cart() {
     }
   }, [isAuthenticated]);
 
-  useEffect(() => {
-    console.log("Redux cart items updated:", reduxCartItems);
-  }, [reduxCartItems]);
+  useEffect(() => {}, [reduxCartItems]);
 
   const itemsToDisplay: CartItem[] = isAuthenticated
     ? reduxCartItems
