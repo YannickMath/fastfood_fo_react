@@ -31,7 +31,7 @@ export default function Header() {
   ];
 
   return (
-    <header className="fixed top-0 h-30 z-50 w-full dark:bg-black bg-amber-500 dark:text-white text-black p-4">
+    <header className="fixed top-0 h-30 z-50 w-full flex items-center justify-between dark:bg-black bg-amber-500 dark:text-white text-black shadow-lg">
       <div className="container mx-auto flex justify-between items-center">
         <img src={Latnight} alt="FastFood Logo" className="w-20 h-20" />
         <HeaderNavbar categories={categories} />

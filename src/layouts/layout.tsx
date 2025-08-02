@@ -26,7 +26,7 @@ export default function Layout() {
   }, [products, dispatch]);
 
   return (
-    <div className="w-screen min-h-screen flex flex-col items-center justify-center bg-gray-100">
+    <div className="w-full min-h-screen flex flex-col items-center justify-center bg-gray-100">
       <Header />
       <Popup />
       <div className="pt-30 w-full">
