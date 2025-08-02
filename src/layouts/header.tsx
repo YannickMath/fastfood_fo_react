@@ -31,9 +31,9 @@ export default function Header() {
   ];
 
   return (
-    <header className="w-full dark:bg-black bg-amber-500 dark:text-white text-black p-4">
+    <header className="fixed top-0 h-30 z-50 w-full dark:bg-black bg-amber-500 dark:text-white text-black p-4">
       <div className="container mx-auto flex justify-between items-center">
-        <img src={Latnight} alt="FastFood Logo" className="w-30 h-30" />
+        <img src={Latnight} alt="FastFood Logo" className="w-20 h-20" />
         <HeaderNavbar categories={categories} />
         <div className="flex items-center space-x-4 relative">
           <Tooltip text="Cart">
