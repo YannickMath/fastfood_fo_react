@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import useAuthInit from "../hooks/authInit";
+import useAuthInit from "../hooks/useAuthInit";
 
 export default function AuthInitProvider({
   children,

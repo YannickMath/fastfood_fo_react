@@ -2,26 +2,8 @@ import type { CartItem } from "../types/cartItem";
 import type { AppDispatch } from "../redux/store";
 import { cartApi } from "../services/cart";
 import { removeOneItem } from "../redux/reducers/cartSlice";
-
-interface RawProduct {
-  id: number;
-  name?: string;
-  price?: number;
-  productId?: number;
-  productName?: string;
-  productPrice?: number;
-  quantity?: number;
-}
-
-function normalizeToCartItem(product: RawProduct): CartItem {
-  return {
-    id: product.id ?? product.productId ?? 0,
-    productId: product.productId ?? product.id,
-    productName: product.productName ?? product.name ?? "Unknown",
-    productPrice: product.productPrice ?? product.price ?? 0,
-    quantity: product.quantity ?? 1,
-  };
-}
+import type { RawProduct } from "../types/rawProduct";
+import normalizeToCartItem from "./normalizeToCartItem";
 
 export default async function handleRemoveFromCart(
   rawProduct: RawProduct,
