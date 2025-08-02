@@ -1,7 +1,4 @@
-interface LoaderProps {
-  size?: "s" | "m" | "l" | "xl";
-  message: string;
-}
+import type { LoaderProps } from "../types/components";
 
 export default function Loader({ size = "m", message }: LoaderProps) {
   return (

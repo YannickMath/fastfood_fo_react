@@ -1,8 +1,5 @@
 import { NavLink, useNavigate } from "react-router-dom";
-
-interface HeaderNavbarProps {
-  categories?: { id: number; type: string }[];
-}
+import type { HeaderNavbarProps } from "../types/components";
 
 export default function HeaderNavbar({ categories }: HeaderNavbarProps) {
   const navigate = useNavigate();

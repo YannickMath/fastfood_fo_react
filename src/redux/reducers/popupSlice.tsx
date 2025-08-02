@@ -1,9 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-
-interface PopupState {
-  message: string | null;
-  visible: boolean;
-}
+import type { PopupState } from "../../types/popupSlice";
 
 const initialState: PopupState = {
   message: null,

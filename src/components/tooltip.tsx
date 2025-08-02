@@ -1,10 +1,4 @@
-import React from "react";
-
-interface TooltipProps {
-  text: string;
-  children: React.ReactNode;
-}
-
+import type { TooltipProps } from "../types/components";
 export default function Tooltip({ text, children }: TooltipProps) {
   return (
     <div className="relative group inline-block">
