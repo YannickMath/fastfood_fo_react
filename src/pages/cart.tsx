@@ -62,6 +62,10 @@ export default function Cart() {
     }
   };
 
+  const total = itemsToDisplay.reduce((acc, item) => {
+    return acc + item.productPrice * item.quantity;
+  }, 0);
+
   return (
     <div className="w-full min-h-screen flex flex-col items-center justify-center">
       {loading ? (
@@ -116,6 +120,11 @@ export default function Cart() {
               ))}
             </ul>
           </div>
+          {itemsToDisplay.length > 0 ? (
+            <div className="mt-4 text-blue-800 text-xl font-semibold text-underline">
+              Total: {total.toFixed(2)}€
+            </div>
+          ) : null}
         </div>
       )}
 
