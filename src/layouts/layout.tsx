@@ -10,15 +10,11 @@ import { setProducts } from "../redux/reducers/productSlice";
 
 export default function Layout() {
   const dispatch = useDispatch();
-
   const { data: products } = useGetProductsQuery();
 
   useEffect(() => {
     const token = localStorage.getItem("jwt");
-    if (token) dispatch(setAuthenticated(true));
-    if (!token) {
-      dispatch(setAuthenticated(false));
-    }
+    dispatch(setAuthenticated(Boolean(token)));
   }, [dispatch]);
 
   useEffect(() => {
@@ -26,12 +22,12 @@ export default function Layout() {
   }, [products, dispatch]);
 
   return (
-    <div className="w-full min-h-screen flex flex-col items-center justify-center bg-gray-100">
+    <div className="w-full min-h-screen flex flex-col bg-gray-100 dark:bg-gray-900">
       <Header />
       <Popup />
-      <div className="pt-30 w-full">
+      <main className="flex-1 w-full pt-30">
         <Outlet />
-      </div>
+      </main>
       <Footer />
     </div>
   );
